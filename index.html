@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burger King | Taste the Flame</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bk-red: #D62300;
+            --flame-amber: #F5A623;
+            --bk-dark: #1A1A1A;
+            --bk-white: #FFFFFF;
+            --bk-gray: #F5F5F5;
+            --font-head: 'Bebas Neue', display;
+            --font-body: 'DM Sans', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bk-white);
+            color: var(--bk-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-head);
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            font-family: var(--font-head);
+            font-size: 1.25rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            border: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-primary {
+            background-color: var(--bk-red);
+            color: white;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 1. STICKY NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--bk-white);
+            border-bottom: 2px solid #eee;
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: padding 0.3s ease;
+        }
+
+        nav.small {
+            padding: 0.5rem 0;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-head);
+            font-size: 2rem;
+            color: var(--bk-red);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bk-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        /* 2. HERO SECTION */
+        .hero {
+            height: 100vh;
+            background: var(--bk-dark);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 300px;
+            background: radial-gradient(circle at bottom, var(--bk-red) 0%, transparent 70%);
+            opacity: 0.4;
+            animation: flicker 4s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 0.5; transform: scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            color: white;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 6rem;
+            line-height: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        /* 3. LTO SECTION */
+        .lto {
+            background-color: var(--flame-amber);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .lto-banner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 1rem;
+            font-family: var(--font-head);
+            font-size: 2.5rem;
+            margin: 1rem 0;
+        }
+
+        .timer-unit {
+            background: var(--bk-dark);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            min-width: 80px;
+        }
+
+        .featured-deal {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        /* 4. MENU HIGHLIGHTS */
+        .menu {
+            padding: 80px 0;
+            background: var(--bk-gray);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card-img {
+            height: 250px;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-head);
+            font-size: 2rem;
+            color: #999;
+            position: relative;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--bk-red);
+            margin: 1rem 0;
+        }
+
+        /* 5. SOCIAL PROOF */
+        .social-proof {
+            padding: 60px 0;
+            background: var(--bk-white);
+            text-align: center;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item h3 {
+            font-size: 3.5rem;
+            color: var(--bk-red);
+        }
+
+        .reviews {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            font-style: italic;
+            padding: 2rem;
+            border-left: 4px solid var(--bk-red);
+            background: #f9f9f9;
+        }
+
+        /* 6. COMBO BUILDER */
+        .combo-builder {
+            padding: 80px 0;
+            background: var(--bk-dark);
+            color: white;
+        }
+
+        .builder-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .builder-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .builder-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            opacity: 0.7;
+        }
+
+        .builder-select {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bk-dark);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .builder-summary {
+            text-align: center;
+        }
+
+        .total-price {
+            font-family: var(--font-head);
+            font-size: 5rem;
+            color: var(--flame-amber);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        /* 7. LOYALTY SECTION */
+        .loyalty {
+            padding: 80px 0;
+            background: var(--bk-dark);
+            color: white;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .loyalty-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .loyalty-text h2 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .loyalty-highlight {
+            background: var(--flame-amber);
+            color: var(--bk-dark);
+            padding: 1rem 2rem;
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .app-badges {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .badge-mock {
+            background: #000;
+            border: 1px solid #444;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        /* 8. LOCATION FINDER */
+        .location {
+            padding: 80px 0;
+            background: var(--bk-gray);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto 50px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1.1rem;
+        }
+
+        .store-results {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .store-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #eee;
+        }
+
+        .store-info h4 {
+            font-family: var(--font-head);
+            font-size: 1.5rem;
+        }
+
+        /* 9. FOOTER */
+        footer {
+            padding: 60px 0;
+            background: var(--bk-dark);
+            color: white;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* CONVERSION MECHANICS */
+        .mobile-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem;
+            background: var(--bk-white);
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1001;
+        }
+
+        @media (max-width: 767px) {
+            .mobile-cta {
+                display: block;
+            }
+            .hero h1 { font-size: 3.5rem; }
+            .hero-ctas { flex-direction: column; }
+            .grid, .builder-grid, .loyalty-grid { grid-template-columns: 1fr; }
+            .nav-content .btn { display: none; }
+        }
+
+        /* ENTRANCE ANIMATIONS */
+        .animate-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .animate-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 1. STICKY NAV -->
+    <nav id="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <div class="logo-icon">BK</div>
+                <span>BURGER KING</span>
+            </div>
+            <a href="#menu" class="btn btn-primary">Order Now</a>
+        </div>
+    </nav>
+
+    <!-- 2. HERO SECTION -->
+    <section class="hero">
+        <div class="container hero-content animate-in">
+            <h1>Taste the <br><span style="color: var(--flame-amber)">Flame.</span></h1>
+            <p>Experience the legendary flame-grilled taste that has defined perfection since 1954.</p>
+            <div class="hero-ctas">
+                <a href="#menu" class="btn btn-primary">Order Now</a>
+                <a href="#locations" class="btn btn-ghost">Find a Restaurant</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. LIMITED TIME OFFER -->
+    <section class="lto">
+        <div class="container lto-banner animate-in">
+            <h2>Fire-Hot Limited Deal</h2>
+            <div class="featured-deal">Whopper® Meal for just R89</div>
+            <div class="countdown" id="countdown">
+                <div class="timer-unit"><span id="hours">00</span><br><span style="font-size: 0.8rem">HRS</span></div>
+                <div class="timer-unit"><span id="minutes">00</span><br><span style="font-size: 0.8rem">MIN</span></div>
+                <div class="timer-unit"><span id="seconds">00</span><br><span style="font-size: 0.8rem">SEC</span></div>
+            </div>
+            <a href="#menu" class="btn btn-primary" style="background: var(--bk-dark)">Get the Deal</a>
+        </div>
+    </section>
+
+    <!-- 4. MENU HIGHLIGHTS -->
+    <section class="menu" id="menu">
+        <div class="container">
+            <div class="section-header animate-in">
+                <h2>Our Flame-Grilled Favorites</h2>
+                <p>Bold flavors, stacked fresh for you.</p>
+            </div>
+            <div class="grid">
+                <div class="card animate-in">
+                    <div class="card-img" style="background: linear-gradient(135deg, #FF6B6B 0%, #D62300 100%)">Whopper</div>
+                    <div class="card-body">
+                        <h3>The Whopper®</h3>
+                        <p>100% flame-grilled beef, fresh toppings.</p>
+                        <div class="card-price">R59.90</div>
+                        <button class="btn btn-primary w-full">Add to Order</button>
+                    </div>
+                </div>
+                <div class="card animate-in" style="transition-delay: 0.1s">
+                    <div class="card-img" style="background: linear-gradient(135deg, #FFD93D 0%, #F5A623 100%)">Chicken</div>
+                    <div class="card-body">
+                        <h3>Crispy Chicken</h3>
+                        <p>Crisp, juicy chicken with savory mayo.</p>
+                        <div class="card-price">R49.90</div>
+                        <button class="btn btn-primary w-full">Add to Order</button>
+                    </div>
+                </div>
+                <div class="card animate-in" style="transition-delay: 0.2s">
+                    <div class="card-img" style="background: linear-gradient(135deg, #6BCB77 0%, #4D96FF 100%)">Fries</div>
+                    <div class="card-body">
+                        <h3>Loaded Fries</h3>
+                        <p>Golden fries topped with cheese and bacon.</p>
+                        <div class="card-price">R34.90</div>
+                        <button class="btn btn-primary w-full">Add to Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. SOCIAL PROOF -->
+    <section class="social-proof">
+        <div class="container">
+            <div class="stats animate-in">
+                <div class="stat-item">
+                    <h3>4.8★</h3>
+                    <p>App Store Rating</p>
+                </div>
+                <div class="stat-item">
+                    <h3>2.3M</h3>
+                    <p>Orders This Month</p>
+                </div>
+                <div class="stat-item">
+                    <h3>99%</h3>
+                    <p>Freshness Guaranteed</p>
+                </div>
+            </div>
+            <div class="reviews animate-in">
+                <div class="review-card">"Best burger I've had in years. The flame-grilled taste is real." - Mike R.</div>
+                <div class="review-card">"BK Rewards is actually worth it. Got my free burger in 2 weeks!" - Sarah K.</div>
+                <div class="review-card">"Lightning fast delivery and still hot. Whopper is King." - David L.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. COMBO BUILDER -->
+    <section class="combo-builder">
+        <div class="container">
+            <div class="section-header animate-in">
+                <h2>Build Your Perfect Combo</h2>
+                <p>Customize your meal and save big.</p>
+            </div>
+            <div class="builder-container animate-in">
+                <div class="builder-grid">
+                    <div class="builder-controls">
+                        <div class="control-group">
+                            <label>Pick Your Burger</label>
+                            <select class="builder-select" id="burger-select">
+                                <option value="59.90">Whopper® (R59.90)</option>
+                                <option value="69.90">Double Whopper® (R69.90)</option>
+                                <option value="49.90">Crispy Chicken (R49.90)</option>
+                                <option value="44.90">Cheeseburger (R44.90)</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Pick Your Side</label>
+                            <select class="builder-select" id="side-select">
+                                <option value="19.90">Regular Fries (R19.90)</option>
+                                <option value="24.90">Large Fries (R24.90)</option>
+                                <option value="29.90">Onion Rings (R29.90)</option>
+                                <option value="0.00">No Side (R0)</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Pick Your Drink</label>
+                            <select class="builder-select" id="drink-select">
+                                <option value="17.90">Soft Drink (R17.90)</option>
+                                <option value="22.90">Milkshake (R22.90)</option>
+                                <option value="12.90">Water (R12.90)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="builder-summary">
+                        <p style="opacity: 0.7; text-transform: uppercase; font-size: 0.8rem">Estimated Total</p>
+                        <div class="total-price">R<span id="combo-total">97.70</span></div>
+                        <button class="btn btn-primary" style="background: var(--flame-amber); color: var(--bk-dark)">Order This Combo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. LOYALTY SECTION -->
+    <section class="loyalty">
+        <div class="container loyalty-grid">
+            <div class="loyalty-text animate-in">
+                <h2>Join BK Crown Rewards</h2>
+                <p>Earn points on every order. Redeem for your favorites. It's that simple.</p>
+                <div class="loyalty-highlight">50 FREE CROWNS ON SIGNUP</div>
+                <div class="app-badges">
+                    <div class="badge-mock"><span>App Store</span></div>
+                    <div class="badge-mock"><span>Google Play</span></div>
+                </div>
+            </div>
+            <div class="animate-in" style="display: flex; justify-content: center">
+                <div style="width: 280px; height: 500px; border: 8px solid #444; border-radius: 40px; background: #222; position: relative">
+                    <div style="position: absolute; top: 15px; left: 50%; width: 60px; height: 4px; background: #333; transform: translateX(-50%); border-radius: 2px"></div>
+                    <div style="margin: 60px 20px; text-align: center">
+                        <div style="width: 80px; height: 80px; background: var(--bk-red); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-family: var(--font-head); font-size: 2rem">BK</div>
+                        <h3 style="font-family: var(--font-head); font-size: 1.5rem">Welcome Back!</h3>
+                        <p style="font-size: 0.8rem; opacity: 0.7">You have 240 Crowns</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. LOCATION FINDER -->
+    <section class="location" id="locations">
+        <div class="container">
+            <div class="section-header animate-in">
+                <h2>Find Your Local BK</h2>
+                <p>Enter your city to find the nearest flame-grilled burger.</p>
+            </div>
+            <div class="search-box animate-in">
+                <input type="text" placeholder="Enter city or area..." id="city-input">
+                <button class="btn btn-primary" onclick="findStores()">Find Food Near Me</button>
+            </div>
+            <div class="store-results" id="store-list">
+                <!-- Mock Results -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="logo" style="justify-content: center; margin-bottom: 2rem; color: white">
+                <div class="logo-icon">BK</div>
+                <span>BURGER KING</span>
+            </div>
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Nutrition Info</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+            <div class="social-icons">
+                <div class="social-icon">F</div>
+                <div class="social-icon">T</div>
+                <div class="social-icon">I</div>
+            </div>
+            <p style="font-size: 0.8rem; opacity: 0.5">© 2026 Burger King Corporation. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- MOBILE STICKY CTA -->
+    <div class="mobile-cta">
+        <a href="#menu" class="btn btn-primary w-full">Order Now</a>
+    </div>
+
+    <script>
+        // STICKY NAV SHRINK
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('small');
+            } else {
+                nav.classList.remove('small');
+            }
+        });
+
+        // COUNTDOWN TIMER
+        const setCountdown = () => {
+            const endTime = new Date().getTime() + (48 * 60 * 60 * 1000);
+            
+            const updateTimer = () => {
+                const now = new Date().getTime();
+                const distance = endTime - now;
+
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+
+                if (distance < 0) {
+                    clearInterval(interval);
+                    document.getElementById('countdown').innerHTML = "OFFER EXPIRED";
+                }
+            };
+
+            const interval = setInterval(updateTimer, 1000);
+            updateTimer();
+        };
+        setCountdown();
+
+        // COMBO BUILDER
+        const updateComboPrice = () => {
+            const burger = parseFloat(document.getElementById('burger-select').value);
+            const side = parseFloat(document.getElementById('side-select').value);
+            const drink = parseFloat(document.getElementById('drink-select').value);
+            const total = burger + side + drink;
+            document.getElementById('combo-total').innerText = total.toFixed(2);
+        };
+
+        ['burger-select', 'side-select', 'drink-select'].forEach(id => {
+            document.getElementById(id).addEventListener('change', updateComboPrice);
+        });
+
+        // LOCATION FINDER
+        const findStores = () => {
+            const input = document.getElementById('city-input').value;
+            const storeList = document.getElementById('store-list');
+            
+            if(!input) return;
+
+            const mockStores = [
+                { name: `BK ${input} Central`, address: "123 Flame Street", distance: "1.2 km" },
+                { name: `BK ${input} Mall`, address: "Shop 45, The Grid Mall", distance: "2.8 km" },
+                { name: `BK ${input} Express`, address: "44 Highway Road", distance: "4.5 km" }
+            ];
+
+            storeList.innerHTML = mockStores.map(store => `
+                <div class="store-card animate-in visible">
+                    <div class="store-info">
+                        <h4>${store.name}</h4>
+                        <p>${store.address} • <span style="color: var(--bk-red)">${store.distance}</span></p>
+                    </div>
+                    <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 1rem">Order from Here</button>
+                </div>
+            `).join('');
+        };
+
+        // ENTRANCE ANIMATIONS
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
+
+    </script>
+</body>
+</html>
